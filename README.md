@@ -1,34 +1,37 @@
 # Weed Detection using Faster R-CNN
 
-This project implements a **Weed Detection System** using **Faster R-CNN**, a state-of-the-art object detection model. The goal of this project is to identify and classify various types of weeds from images of crops, enabling automatic weed control for agricultural applications.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-1.7+-EE4C2C.svg?logo=PyTorch)](https://pytorch.org/)
+
+This project implements a **Weed Detection System** using **Faster R-CNN**, a state-of-the-art object detection model. The goal is to identify and classify various types of weeds from images of crops, enabling automatic weed control for agricultural applications.
 
 ## Table of Contents
-1. [Project Overview](#project-overview)
-2. [Prerequisites](#prerequisites)
-3. [Installation](#installation)
-4. [Dataset](#dataset)
-5. [Model Architecture](#model-architecture)
-6. [Training the Model](#training-the-model)
-7. [Evaluation](#evaluation)
-8. [Metrics](#metrics)
-9. [Usage](#usage)
-10. [Contributing](#contributing)
-11. [License](#license)
-12. [Acknowledgements](#acknowledgements)
+- [Project Overview](#project-overview)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Dataset](#dataset)
+- [Model Architecture](#model-architecture)
+- [Training the Model](#training-the-model)
+- [Evaluation](#evaluation)
+- [Metrics](#metrics)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
 
 ## Project Overview
 
-This project uses the **Faster R-CNN** model to detect weeds from images of crops. We train the model on a custom dataset of images labeled with weed and crop annotations, and evaluate its performance using metrics like **IoU (Intersection over Union)**, **Precision**, **Recall**, and **Average Precision**. 
+This project uses the **Faster R-CNN** model to detect weeds from images of crops. We train the model on a custom dataset of images labeled with weed and crop annotations, and evaluate its performance using metrics like **IoU (Intersection over Union)**, **Precision**, **Recall**, and **Average Precision**.
 
-### Key Features:
-- Uses **PyTorch** and **Torchvision** for building and training the Faster R-CNN model.
-- Includes preprocessing steps like image resizing, augmentation, and edge detection for better feature extraction.
-- Implements evaluation metrics such as **IoU**, **Precision**, **Recall**, and **Average Precision**.
-- Provides a simple pipeline for training and evaluating the model.
+### Key Features
+- 🚀 **State-of-the-art Model**: Utilizes Faster R-CNN with ResNet-50 backbone
+- 📊 **Comprehensive Metrics**: Implements IoU, Precision, Recall, and mAP for evaluation
+- 🔄 **Data Augmentation**: Includes preprocessing and augmentation for robust training
+- ⚡ **GPU Support**: Accelerated training with CUDA support
+- 📈 **Easy Training Pipeline**: Simple command-line interface for training and evaluation
 
 ## Prerequisites
-
-Ensure you have the following installed:
 
 - Python >= 3.6
 - PyTorch >= 1.7
@@ -37,45 +40,33 @@ Ensure you have the following installed:
 - tqdm >= 4.41.1
 - CUDA (Optional, for GPU acceleration)
 
-Install the dependencies by running:
+## Installation
 
-```bash
-pip install -r requirements.txt
-You can also install the required libraries individually:
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-username/weed-detection.git
+   cd weed-detection
+   ```
 
-bash
-Copy code
-pip install torch torchvision opencv-python tqdm
-Installation
-Clone this repository to your local machine:
+2. (Recommended) Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-bash
-Copy code
-git clone https://github.com/your-username/weed-detection.git
-Navigate into the project directory:
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+   Or install individually:
+   ```bash
+   pip install torch torchvision opencv-python tqdm
+   ```
 
-bash
-Copy code
-cd weed-detection
-Install the required dependencies:
+## Dataset
 
-bash
-Copy code
-pip install -r requirements.txt
-(Optional) Set up a virtual environment for better package management:
-
-bash
-Copy code
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Dataset
-Dataset Overview:
-This project uses a custom dataset of crop and weed images, where each image is annotated with bounding boxes for the objects of interest. The dataset consists of images of crops and different types of weeds. Annotations are in JSON format, which contain bounding box coordinates and class labels.
-
-Ensure the dataset directory structure is as follows:
-
-markdown
-Copy code
+### Dataset Structure
+```
 dataset/
     images/
         image1.jpg
@@ -85,15 +76,10 @@ dataset/
         image1.json
         image2.json
         ...
-Dataset Format:
-Images: Stored in the images/ directory in .jpg or .png format.
+```
 
-Annotations: Stored in the annotations/ directory as .json files. Each JSON file contains information about the bounding boxes and class labels in the corresponding image.
-
-Example annotation format:
-
-json
-Copy code
+### Annotation Format
+```json
 {
     "image": "image1.jpg",
     "regions": [
@@ -103,133 +89,76 @@ Copy code
         }
     ]
 }
-Model Architecture
-The model used in this project is Faster R-CNN with a ResNet-50 backbone. Faster R-CNN is an object detection model that uses a Region Proposal Network (RPN) to generate object proposals and then classifies and refines them using a RoI (Region of Interest) pooling layer.
+```
 
-Backbone: Pre-trained ResNet-50 from ImageNet.
+## Model Architecture
 
-Anchor Generator: Custom anchor sizes and aspect ratios tailored for weed detection.
+The model uses Faster R-CNN with the following components:
+- **Backbone**: Pre-trained ResNet-50
+- **RPN (Region Proposal Network)**: Generates region proposals
+- **RoI Pooling**: Extracts fixed-size features from proposals
+- **Box Predictor**: Classifies objects and refines bounding boxes
 
-Box Predictor: Replaces the default box predictor with one suited for our dataset.
+## Training the Model
 
-Training the Model
-To train the model, follow these steps:
-
-Prepare your dataset according to the directory structure above.
-
-Run the training script:
-
-bash
-Copy code
+To train the model, run:
+```bash
 python train.py --epochs 10 --batch-size 8 --lr 0.005
-Parameters:
+```
 
---epochs: Number of epochs to train the model.
+### Training Parameters
+- `--epochs`: Number of training epochs (default: 10)
+- `--batch-size`: Batch size (default: 8)
+- `--lr`: Learning rate (default: 0.005)
+- `--data-dir`: Path to dataset (default: 'dataset/')
+- `--output-dir`: Directory to save checkpoints (default: 'output/')
 
---batch-size: Size of the batch for each training step.
+## Evaluation
 
---lr: Learning rate for the optimizer.
+Evaluate the model on the test set:
+```bash
+python evaluate.py --model-path path/to/model.pth --data-dir dataset/
+```
 
-Training Process:
-The model will train for the specified number of epochs and output loss values for classification loss, bounding box regression loss, and RPN box regression loss during each epoch.
+## Metrics
 
-The loss values and progress are displayed via a progress bar from the tqdm library.
+- **IoU (Intersection over Union)**: Measures localization accuracy
+- **Precision**: Ratio of true positives to all positive predictions
+- **Recall**: Ratio of true positives to all actual positives
+- **mAP**: Mean Average Precision across all classes
 
-Evaluation
-After training, you can evaluate the model’s performance on the test/validation set:
+## Usage
 
-bash
-Copy code
-python evaluate.py
-This script will compute the following metrics:
+### Training
+```bash
+python train.py --epochs 20 --batch-size 16 --lr 0.001
+```
 
-IoU (Intersection over Union)
+### Evaluation
+```bash
+python evaluate.py --model-path output/model_best.pth
+```
 
-Precision
+### Inference on Single Image
+```bash
+python predict.py --image path/to/image.jpg --model output/model_best.pth
+```
 
-Recall
+## Contributing
 
-Average Precision (AP)
+Contributions are welcome! Please follow these steps:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Mean Average Precision (mAP)
+## License
 
-The results are printed at the end of the evaluation.
+Distributed under the MIT License. See `LICENSE` for more information.
 
-Metrics
-IoU (Intersection over Union)
-Measures the overlap between predicted bounding boxes and ground truth bounding boxes.
+## Acknowledgements
 
-Higher IoU indicates better object localization.
-
-Precision
-The proportion of true positive detections among all predicted positive detections.
-
-Recall
-The proportion of true positive detections among all actual positive objects (ground truth).
-
-Average Precision (AP)
-Measures the precision at various recall levels. It summarizes the performance of the model across different IoU thresholds.
-
-Mean Average Precision (mAP)
-The mean of Average Precision across all classes. For this model, we compute mAP for each class and average them.
-
-Usage
-Training:
-Train the model with the following command:
-
-bash
-Copy code
-python train.py --epochs 10 --batch-size 8 --lr 0.005
-Adjust hyperparameters like batch size, learning rate, and the number of epochs based on your hardware and dataset.
-
-Evaluation:
-To evaluate the model after training:
-
-bash
-Copy code
-python evaluate.py
-This will output the IoU, Precision, Recall, and Average Precision on the validation or test set.
-
-Contributing
-If you'd like to contribute to this project, feel free to submit pull requests. Here are some ways you can help:
-
-Fixing bugs or improving the performance of the model.
-
-Adding more features such as data augmentation techniques or additional metrics.
-
-Improving the documentation.
-
-Steps for Contributing:
-Fork the repository.
-
-Create a new branch (git checkout -b feature-branch).
-
-Commit your changes (git commit -am 'Add new feature').
-
-Push the branch (git push origin feature-branch).
-
-Submit a pull request.
-
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-Acknowledgements
-The Faster R-CNN model and ResNet-50 backbone come from PyTorch and Torchvision.
-
-Dataset used in this project is custom-built and may require adjustments based on your own weed detection dataset.
-
-markdown
-Copy code
-
----
-
-### How to Use This README:
-
-1. **Project Setup**: This README explains how to set up the project on a local machine or server, install dependencies, and use the provided scripts for training and evaluation.
-2. **Training and Evaluation**: The sections on **Training the Model** and **Evaluation** give clear instructions on how to run the training and evaluation scripts.
-3. **Metrics**: It also highlights the evaluation metrics like **IoU**, **Precision**, **Recall**, and **Average Precision** to help assess the model's performance.
-4. **Contributing**: If you are open to contributions, this section provides instructions for how others can contribute to the project.
-
-### Save this content as `README.md` in the root of your project directory.
-
-Let me know if you need further adjustments!
+- [PyTorch](https://pytorch.org/) - The machine learning framework used
+- [TorchVision](https://pytorch.org/vision/stable/index.html) - For model architectures and datasets
+- [COCO API](https://cocodataset.org/) - For evaluation metrics implementation
