@@ -1,10 +1,6 @@
 # Weed Detection using Faster R-CNN
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-1.7+-EE4C2C.svg?logo=PyTorch)](https://pytorch.org/)
-
-This project implements a **Weed Detection System** using **Faster R-CNN**, a state-of-the-art object detection model. The goal is to identify and classify various types of weeds from images of crops, enabling automatic weed control for agricultural applications.
+This project implements a **Weed Detection System** using various state-of-the-art object detection model. The goal is to identify and classify various types of weeds from images of crops, enabling automatic weed control for agricultural applications.
 
 ## Table of Contents
 - [Project Overview](#project-overview)
@@ -25,7 +21,7 @@ This project implements a **Weed Detection System** using **Faster R-CNN**, a st
 This project uses the **Faster R-CNN** model to detect weeds from images of crops. We train the model on a custom dataset of images labeled with weed and crop annotations, and evaluate its performance using metrics like **IoU (Intersection over Union)**, **Precision**, **Recall**, and **Average Precision**.
 
 ### Key Features
-- 🚀 **State-of-the-art Model**: Utilizes Faster R-CNN with ResNet-50 backbone
+- 🚀 **State-of-the-art Model**: Utilizes Faster R-CNN, Masked R-CNN, DETR, RF-DETR with ResNet-50, MobileNet with RPN, FPN, CGA backbone
 - 📊 **Comprehensive Metrics**: Implements IoU, Precision, Recall, and mAP for evaluation
 - 🔄 **Data Augmentation**: Includes preprocessing and augmentation for robust training
 - ⚡ **GPU Support**: Accelerated training with CUDA support
